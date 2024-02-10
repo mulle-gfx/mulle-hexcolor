@@ -1,0 +1,2 @@
+m;none;no-all-load,no-build,no-cmake-inherit,no-delete,no-dependency,no-fs,no-import,no-share,no-update;8589C101-0AD9-4E89-BE1D-1E601E7B9599;;;;;include=math.h
+mulle-core;${MULLE__CORE_NODETYPE:-git};no-all-load,no-cmake-loader,no-cmake-searchpath,no-import,no-singlephase;82A4A413-2858-46D6-85A5-945F71CD86E4;${MULLE__CORE_URL:-https://github.com/mulle-core/mulle-core.git};${MULLE__CORE_BRANCH};${MULLE__CORE_TAG};;

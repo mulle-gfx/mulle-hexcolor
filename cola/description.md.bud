@@ -1,0 +1,4 @@
+This library defines a `CGHexColor` which is a 32bit RGBA
+representation as used in CSS or HTML. It's a transport representation so to
+speak. There are no computations defined for CGHexColor.
+

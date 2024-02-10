@@ -1,0 +1,8 @@
+#### Color creation
+
+| Name                          | Description
+| ------------------------------|-------------------------
+| CGHexColorMake                | shortcut for CGColorMakeWithRGBA
+| CGHexColorMakeWithRGB         | calls CGColorMakeRGBA which alpha 1.0
+| CGHexColorMakeWithRGBA        | the most basic color construction function
+| CGHexColorMakeWithCommonName  | create color from HTML name (e.g. "alizarin-crimson")
