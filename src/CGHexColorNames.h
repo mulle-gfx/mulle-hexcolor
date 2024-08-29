@@ -77,7 +77,7 @@ static inline char *
    int                         middle;
    struct CGHexColorNamePair   *p;
 
-   assert( buf != CGHexColorCommonNameTable || "copy table and sort by hexColor");
+   assert( buf != CGHexColorCommonNameTable || "use CGHexColorNamePairInitColorSortedTable to create a table sorted by hexColor");
 
    first    = 0;
    last     = n - 1;
@@ -105,6 +105,11 @@ static inline char *
 }
 
 
+MULLE__HEXCOLOR_EXTERN_GLOBAL
+unsigned int   CGHexColorNamePairInitColorSortedTable( struct CGHexColorNamePair  *table,
+                                                       unsigned int count);
+
+
 // will return 0x00000000 (not black 0x000000FF) for not found
 MULLE__HEXCOLOR_EXTERN_GLOBAL
 CGHexColor  CGHexColorMakeWithCommonName( char *name);
@@ -113,7 +118,8 @@ CGHexColor  CGHexColorMakeWithCommonName( char *name);
 MULLE__HEXCOLOR_EXTERN_GLOBAL
 CGHexColor  CGHexColorMakeWithRandomName( void);
 
-static inline CGHexColor   CGHexColorMakeWithNameIndex( unsigned int index)
+
+static inline CGHexColor   CGHexColorMakeWithNameAtIndex( unsigned int index)
 {
    CGHexColor   hexColor;
 
@@ -121,6 +127,18 @@ static inline CGHexColor   CGHexColorMakeWithNameIndex( unsigned int index)
    hexColor = _CGHexColorCommonNameTable[ index].hexColor;
    return( hexColor);
 }
+
+
+static inline char *  CGHexColorNameAtIndex( unsigned int index)
+{
+   index %= CGHexColorCommonNameTableSize;
+   return( _CGHexColorCommonNameTable[ index].name);
+}
+
+
+// returns NULL if none found
+MULLE__HEXCOLOR_EXTERN_GLOBAL
+char   *CGHexColorGetCommonName( CGHexColor hexColor);
 
 
 #endif

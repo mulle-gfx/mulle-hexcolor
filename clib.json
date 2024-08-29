@@ -4,7 +4,7 @@
    "description" : "🌈 mulle-hexcolor supports #45CB33FF and 'goldenrod'",
    "keywords" : [],
    "license" : "BSD-3-LICENSE",
-   "repo" : "MulleUI/mulle-color",
+   "repo" : "mulle-gfx/mulle-hexcolor",
    "src" : [
       "src/CGHexColor.h",
       "src/CGHexColorConstants.h",

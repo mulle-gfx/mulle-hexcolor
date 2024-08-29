@@ -8,7 +8,7 @@
 // unique
 //
 // static initializers can't deal with inline calls yet (need constexpr) for that
-// so define some helpfule macros
+// so define some helpful macros
 
 #define CGHexColorAliceBlue             0xf0f8ffff
 #define CGHexColorAntiqueWhite          0xfaebd7ff
@@ -157,19 +157,19 @@
 #define CGHexColorClear                 0x00000000
 #define CGHexColorPersianBlue           0x005ca9ff
 
-#define CGHexColorAlizarinCrimson      0x4e1500ff
-#define CGHexColorBrightRed            0xdb0000ff
-#define CGHexColorCadmiumYellow        0xffec00ff
-#define CGHexColorDarkSienna           0x5f2e1fff
-#define CGHexColorIndianYellow         0xffb800ff
-#define CGHexColorMidnightBlack        0x000000ff
-#define CGHexColorPhthaloBlue          0x0c0040ff
-#define CGHexColorPhthaloGreen         0x102e3cff
-#define CGHexColorPrussianBlue         0x021e44ff
-#define CGHexColorSapGreen             0x0a3410ff
-#define CGHexColorTitaniumWhite        0xffffffff
-#define CGHexColorVanDykeBrown         0x221b15ff
-#define CGHexColorYellowOchre          0xc79b00ff
+#define CGHexColorAlizarinCrimson       0x4e1500ff
+#define CGHexColorBrightRed             0xdb0000ff
+#define CGHexColorCadmiumYellow         0xffec00ff
+#define CGHexColorDarkSienna            0x5f2e1fff
+#define CGHexColorIndianYellow          0xffb800ff
+#define CGHexColorMidnightBlack         0x000000ff
+#define CGHexColorPhthaloBlue           0x0c0040ff
+#define CGHexColorPhthaloGreen          0x102e3cff
+#define CGHexColorPrussianBlue          0x021e44ff
+#define CGHexColorSapGreen              0x0a3410ff
+#define CGHexColorTitaniumWhite         0xffffffff
+#define CGHexColorVanDykeBrown          0x221b15ff
+#define CGHexColorYellowOchre           0xc79b00ff
 
 
 

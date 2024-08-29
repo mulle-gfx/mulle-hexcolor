@@ -2,6 +2,8 @@
 
 #define _GNU_SOURCE
 
+#include <mulle-core/mulle-core.h>
+
 #include "CGHexColor.h"
 #include "CGHexColorConstants.h"
 #include "CGHexColorNames.h"
@@ -206,4 +208,40 @@ CGHexColor  CGHexColorMakeWithCommonName( char *name)
 CGHexColor  CGHexColorMakeWithRandomName( void)
 {
    return( CGHexColorCommonNameTable[ rand() % CGHexColorCommonNameTableSize].hexColor);
+}
+
+
+char   *CGHexColorGetCommonName( CGHexColor hexColor)
+{
+   return( CGHexColorNamePairSearchNameForHexColor( CGHexColorCommonNameTable,
+                                                    CGHexColorCommonNameTableSize,
+                                                    hexColor));
+}
+
+
+static int   CGHexColorNamePairCompareByColor( void *a, void *b, void *info)
+{
+   struct CGHexColorNamePair *arg1 = (struct CGHexColorNamePair *) a;
+   struct CGHexColorNamePair *arg2 = (struct CGHexColorNamePair *) b;
+
+   return( (arg1->hexColor > arg2->hexColor) - (arg1->hexColor < arg2->hexColor));
+}
+
+
+unsigned int   CGHexColorNamePairInitColorSortedTable( struct CGHexColorNamePair  *table,
+                                                       unsigned int count)
+{
+   size_t   size;
+
+   assert( count >= CGHexColorCommonNameTableSize);
+   assert( table != CGHexColorCommonNameTable);
+
+   size = sizeof( struct CGHexColorNamePair) * CGHexColorCommonNameTableSize;
+   memcpy( table, CGHexColorCommonNameTable, size);
+
+   mulle_qsort( table,
+                CGHexColorCommonNameTableSize,
+                sizeof( struct CGHexColorNamePair),
+                CGHexColorNamePairCompareByColor);
+   return( CGHexColorCommonNameTableSize);
 }
