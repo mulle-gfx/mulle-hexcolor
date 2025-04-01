@@ -67,4 +67,16 @@ static inline CGHexColor   CGHexColorMakeWithRGBAComponents( float rgba[ 4])
 }
 
 
+static inline void   CGHexColorGetRGBAComponents( CGHexColor c, float rgba[ 4])
+{
+   rgba[ 3] = (c & 0xFF) / 255.0;
+   c >>= 8;
+   rgba[ 2] = (c & 0xFF) / 255.0;
+   c >>= 8;
+   rgba[ 1] = (c & 0xFF) / 255.0;
+   c >>= 8;
+   rgba[ 0] = (c & 0xFF) / 255.0;
+}
+
+
 #endif
