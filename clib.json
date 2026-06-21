@@ -6,10 +6,12 @@
    "license" : "BSD-3-LICENSE",
    "repo" : "mulle-gfx/mulle-hexcolor",
    "src" : [
+      "asset/dox/TOC.md",
       "src/CGHexColor.h",
       "src/CGHexColorConstants.h",
       "src/CGHexColorNames.c",
       "src/CGHexColorNames.h",
+      "src/generic/include.h",
       "src/mulle-hexcolor.h"
    ],
    "dependencies" : {

@@ -1,5 +1,3 @@
-#define MULLE_CG_INCLUDE_BARE
-
 #define _GNU_SOURCE
 
 #include <mulle-core/mulle-core.h>
@@ -23,6 +21,7 @@
 // all colors will have alpha set to 0xFF
 // unknown is all zero
 //
+MULLE__HEXCOLOR_GLOBAL_VAR
 const struct CGHexColorNamePair
    _CGHexColorCommonNameTable[ CGHexColorCommonNameTableSize] =
 {
@@ -239,9 +238,10 @@ unsigned int   CGHexColorNamePairInitColorSortedTable( struct CGHexColorNamePair
    size = sizeof( struct CGHexColorNamePair) * CGHexColorCommonNameTableSize;
    memcpy( table, CGHexColorCommonNameTable, size);
 
-   mulle_qsort( table,
-                CGHexColorCommonNameTableSize,
-                sizeof( struct CGHexColorNamePair),
-                CGHexColorNamePairCompareByColor);
+   mulle_qsort_r( table,
+                  CGHexColorCommonNameTableSize,
+                  sizeof( struct CGHexColorNamePair),
+                  CGHexColorNamePairCompareByColor,
+                  NULL);
    return( CGHexColorCommonNameTableSize);
 }

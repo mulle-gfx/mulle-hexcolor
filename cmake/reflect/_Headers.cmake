@@ -11,7 +11,15 @@ endif()
 # contents are derived from the file locations
 
 set( INCLUDE_DIRS
+src/generic
 src
+)
+
+#
+# contents selected with patternfile ??-header--public-generic-headers
+#
+set( PUBLIC_GENERIC_HEADERS
+src/generic/include.h
 )
 
 #

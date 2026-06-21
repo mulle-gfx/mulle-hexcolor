@@ -16,7 +16,7 @@ struct CGHexColorNamePair
 
 // these are just HTML colors, no "extensions". Which is better for import
 // and export,,,
-MULLE__HEXCOLOR_EXTERN_GLOBAL
+MULLE__HEXCOLOR_GLOBAL
 const struct CGHexColorNamePair   _CGHexColorCommonNameTable[ CGHexColorCommonNameTableSize];
 
 
@@ -105,17 +105,17 @@ static inline char *
 }
 
 
-MULLE__HEXCOLOR_EXTERN_GLOBAL
+MULLE__HEXCOLOR_GLOBAL
 unsigned int   CGHexColorNamePairInitColorSortedTable( struct CGHexColorNamePair  *table,
                                                        unsigned int count);
 
 
 // will return 0x00000000 (not black 0x000000FF) for not found
-MULLE__HEXCOLOR_EXTERN_GLOBAL
+MULLE__HEXCOLOR_GLOBAL
 CGHexColor  CGHexColorMakeWithCommonName( char *name);
 
 
-MULLE__HEXCOLOR_EXTERN_GLOBAL
+MULLE__HEXCOLOR_GLOBAL
 CGHexColor  CGHexColorMakeWithRandomName( void);
 
 
@@ -137,7 +137,7 @@ static inline char *  CGHexColorNameAtIndex( unsigned int index)
 
 
 // returns NULL if none found
-MULLE__HEXCOLOR_EXTERN_GLOBAL
+MULLE__HEXCOLOR_GLOBAL
 char   *CGHexColorGetCommonName( CGHexColor hexColor);
 
 
