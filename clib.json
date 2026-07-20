@@ -1,9 +1,9 @@
 {
    "name" : "mulle-hexcolor",
    "version" : "0.0.1",
-   "description" : "🌈 mulle-hexcolor supports #45CB33FF and 'goldenrod'",
+   "description" : "🌈 mulle-hexcolor converts between color models",
    "keywords" : [],
-   "license" : "BSD-3-LICENSE",
+   "license" : "UNLICENSED",
    "repo" : "mulle-gfx/mulle-hexcolor",
    "src" : [
       "asset/dox/TOC.md",

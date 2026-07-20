@@ -61,3 +61,5 @@ coverage*.html
 .ackrc
 *.test.*
 *.tmp.*
+.roam
+.idea

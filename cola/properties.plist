@@ -1,23 +1,25 @@
 {
    project =
    {
-      description="🌈 mulle-hexcolor supports #45CB33FF and 'goldenrod'";
+      description="🌈 mulle-hexcolor converts between color models";
       domain="github";
+      language="c";
+      dialect="c";
       name="mulle-hexcolor";
       user="mulle-gfx";
       repo="mulle-hexcolor";
       homepage="https://github.com/mulle-gfx/mulle-hexcolor";
-      license="BSD-3-LICENSE"
+      license="UNLICENSED";
    };
    dependencies =
    (
       {
-         description="🌋 Almagamated library of mulle-core and mulle-c";
+         description="🌋 Almagamated library of mulle-core + mulle-concurrent + mulle-c";
          domain="github";
          name="mulle-core";
          repo="mulle-core";
          url="https://github.com/mulle-core/mulle-core";
          user="mulle-core";
       }
-   )
+   );
 }
