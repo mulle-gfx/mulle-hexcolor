@@ -64,7 +64,7 @@ The library is built around a simple, efficient hexadecimal color representation
 #### Name/Color Lookup Functions
 
 - **`CGHexColorMakeWithCommonName(char *name)`**: Look up a color by name (case-insensitive, ignores spaces and hyphens). Returns `CGHexColorNotFound` (0x00000000) if not found. Examples: "AliceBlue", "alice blue", "alice-blue" all match.
-- **`CGHexColorGetCommonName(CGHexColor hexColor)`**: Reverse lookup - find the standard name for a color. Returns NULL if the color is not in the standard table. **Note:** Requires a color-sorted table; see `CGHexColorNamePairInitColorSortedTable`.
+- **`CGHexColorGetCommonName(CGHexColor hexColor)`**: Reverse lookup - find the standard name for a color. Returns NULL if the color is not in the standard table. **BUG (v0.0.1):** This function passes the name-sorted `CGHexColorCommonNameTable` directly to the binary search, so it will not find colors correctly. Use `CGHexColorNamePairInitColorSortedTable` + `CGHexColorNamePairSearchNameForHexColor` manually instead.
 - **`CGHexColorMakeWithRandomName(void)`**: Returns a random color from the standard table.
 - **`CGHexColorMakeWithNameAtIndex(unsigned int index)`**: Get color at a specific index (wraps with modulo).
 - **`CGHexColorNameAtIndex(unsigned int index)`**: Get color name at a specific index (wraps with modulo).
@@ -85,6 +85,11 @@ The library is built around a simple, efficient hexadecimal color representation
 - **Purpose:** Single header to include all mulle-hexcolor functionality.
 - **Version:** `MULLE__HEXCOLOR_VERSION` macro provides library version as `((major << 20) | (minor << 8) | patch)`.
 - **Includes:** Brings in `CGHexColor.h`, `CGHexColorConstants.h`, `CGHexColorNames.h`, and dependency headers.
+
+#### Symbol Visibility Macros (from `generic/include.h`)
+- **`MULLE__HEXCOLOR_GLOBAL`**: Prefix for functions and global constants. Expands to `MULLE_C_GLOBAL` (i.e. `__attribute__((visibility("default")))`) when building the library or when including dynamically; expands to `extern` otherwise.
+- **`MULLE__HEXCOLOR_GLOBAL_VAR`**: Prefix for global variable definitions (e.g., the name table). Expands to `MULLE_C_GLOBAL_VAR` during library builds, empty otherwise.
+- These control DLL symbol export/import and allow the same headers to work in both static and dynamic linking scenarios.
 
 ## 4. Performance Characteristics
 
@@ -109,7 +114,7 @@ The library is built around a simple, efficient hexadecimal color representation
 ### Common Pitfalls
 
 - **CGHexColorNotFound vs Black:** The "not found" sentinel (0x00000000) represents fully transparent, not black. Black is `CGHexColorBlack` (0x000000FF).
-- **Reverse Lookup on Wrong Table:** `CGHexColorGetCommonName` will assert if you try to use it directly. It needs a color-sorted table from `CGHexColorNamePairInitColorSortedTable`.
+- **Reverse Lookup on Wrong Table:** `CGHexColorGetCommonName` uses the name-sorted table internally and will not produce correct results. Use `CGHexColorNamePairInitColorSortedTable` to create a color-sorted copy, then call `CGHexColorNamePairSearchNameForHexColor` on that copy. `CGHexColorNamePairSearchNameForHexColor` will assert if called on a name-sorted table.
 - **Case Sensitivity:** Color names in the table are all lowercase without spaces. However, `CGHexColorMakeWithCommonName` handles this normalization.
 - **Float Range:** Color creation functions assert that float values are in [0.0, 1.0]. Out-of-range values will cause assertion failures in debug builds.
 
