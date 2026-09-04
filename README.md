@@ -18,12 +18,38 @@ speak. There are no computations defined for CGHexColor.
 
 | Name                          | Description
 | ------------------------------|-------------------------
-| CGHexColorMake                | shortcut for CGColorMakeWithRGBA
+| CGHexColorMake                | shortcut for CGHexColorMakeWithRGBA
 | CGHexColorMakeWithRGB         | calls CGColorMakeRGBA which alpha 1.0
 | CGHexColorMakeWithRGBA        | the most basic color construction function
+| CGHexColorMakeWithRGBAComponents | create a `CGHexColor` from a float `rgba[4]` array
+| CGHexColorGetRGBAComponents   | unpack a `CGHexColor` into a float `rgba[4]` array
 | CGHexColorMakeWithCommonName  | create color from HTML name (e.g. "alizarin-crimson")
 
 
+## Documentation & Guides
+
+* [API Summary](asset/dox/api/toc)
+* [Coder Guide](asset/howto/coder/mulle-hexcolor)
+
+## Usage
+
+A color as a plain integer: R<<24, G<<16, B<<8, A. No floating point, no
+computations — just a compact, lossless "transport" representation:
+
+``` c
+#include <mulle-hexcolor/mulle-hexcolor.h>
+
+int  main( void)
+{
+   CGHexColor  c = CGHexColorMakeWithRGBA( 1.0f, 0.5f, 0.0f, 1.0f);
+
+   printf( "0x%08lx\n", (unsigned long) c);   /* 0xff8000ff */
+
+   float  rgba[ 4];
+   CGHexColorGetRGBAComponents( c, rgba);
+   return( 0);
+}
+```
 
 
 ### You are here

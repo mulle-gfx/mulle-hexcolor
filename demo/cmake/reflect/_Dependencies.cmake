@@ -12,13 +12,42 @@ if( MULLE_TRACE_INCLUDE)
 endif()
 
 #
+# Set library preference based on BUILD_SHARED_LIBS
+#
+if( BUILD_SHARED_LIBS)
+   set( MULLE_PREFERRED_LIBRARY_PREFIX "${CMAKE_SHARED_LIBRARY_PREFIX}")
+   set( MULLE_PREFERRED_LIBRARY_SUFFIX "${CMAKE_SHARED_LIBRARY_SUFFIX}")
+   set( MULLE_FALLBACK_LIBRARY_PREFIX "${CMAKE_STATIC_LIBRARY_PREFIX}")
+   set( MULLE_FALLBACK_LIBRARY_SUFFIX "${CMAKE_STATIC_LIBRARY_SUFFIX}")
+else()
+   set( MULLE_PREFERRED_LIBRARY_PREFIX "${CMAKE_STATIC_LIBRARY_PREFIX}")
+   set( MULLE_PREFERRED_LIBRARY_SUFFIX "${CMAKE_STATIC_LIBRARY_SUFFIX}")
+   set( MULLE_FALLBACK_LIBRARY_PREFIX "${CMAKE_SHARED_LIBRARY_PREFIX}")
+   set( MULLE_FALLBACK_LIBRARY_SUFFIX "${CMAKE_SHARED_LIBRARY_SUFFIX}")
+endif()
+
+#
 # Generated from sourcetree: 6D0D4616-5063-41DC-A9D0-49BBD9A0A038;mulle-c11;no-all-load,no-cmake-inherit,no-import,no-link,no-recurse,no-singlephase;
 # Disable with : `mulle-sourcetree mark mulle-c11 no-header`
 # Disable for this platform: `mulle-sourcetree mark mulle-c11 no-cmake-platform-${MULLE_UNAME}`
 # Disable for a sdk: `mulle-sourcetree mark mulle-c11 no-cmake-sdk-<name>`
 #
-if( NOT MULLE__C11_HEADER)
-   find_file( MULLE__C11_HEADER NAMES mulle-c11.h mulle-c11/mulle-c11.h)
+foreach( _TMP_MULLE__C11_HEADER_TARGET_TARGET mulle-c11)
+   if( TARGET ${_TMP_MULLE__C11_HEADER_TARGET_TARGET})
+      set( MULLE__C11_HEADER_TARGET ${_TMP_MULLE__C11_HEADER_TARGET_TARGET})
+      break()
+   endif()
+endforeach()
+if( NOT MULLE__C11_HEADER AND NOT MULLE__C11_HEADER_TARGET)
+   find_file( MULLE__C11_HEADER NAMES
+      mulle-c11.h mulle-c11/mulle-c11.h
+      NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_FIND_ROOT_PATH
+   )
+   if( NOT MULLE__C11_HEADER AND NOT DEPENDENCY_IGNORE_SYSTEM_HEADERS)
+      find_file( MULLE__C11_HEADER NAMES
+         mulle-c11.h mulle-c11/mulle-c11.h
+      )
+   endif()
    message( STATUS "MULLE__C11_HEADER is ${MULLE__C11_HEADER}")
 
    #
@@ -33,7 +62,7 @@ if( NOT MULLE__C11_HEADER)
       # intentionally left blank
    else()
       # Disable with: `mulle-sourcetree mark mulle-c11 no-require`
-      message( SEND_ERROR "MULLE__C11_HEADER was not found")
+      message( SEND_ERROR "MULLE__C11_HEADER was not found in mulle-c11.h mulle-c11/mulle-c11.h")
    endif()
 endif()
 
@@ -49,30 +78,41 @@ if( COLLECT_DEPENDENCY_LIBRARIES_AS_NAMES)
    list( APPEND DEPENDENCY_LIBRARIES "mulle-core")
 else()
    if( NOT MULLE__CORE_LIBRARY)
-      find_library( MULLE__CORE_LIBRARY NAMES
-         ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-core${CMAKE_DEBUG_POSTFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}
-         ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-core${CMAKE_STATIC_LIBRARY_SUFFIX}
-         mulle-core
-         NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH
-      )
-      if( NOT MULLE__CORE_LIBRARY AND NOT DEPENDENCY_IGNORE_SYSTEM_LIBARIES)
+      foreach( _TMP_MULLE__CORE_LIBRARY_TARGET mulle-core)
+         if( TARGET ${_TMP_MULLE__CORE_LIBRARY_TARGET})
+            set( MULLE__CORE_LIBRARY ${_TMP_MULLE__CORE_LIBRARY_TARGET})
+            break()
+         endif()
+      endforeach()
+      if( NOT MULLE__CORE_LIBRARY)
          find_library( MULLE__CORE_LIBRARY NAMES
-            ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-core${CMAKE_DEBUG_POSTFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}
-            ${CMAKE_STATIC_LIBRARY_PREFIX}mulle-core${CMAKE_STATIC_LIBRARY_SUFFIX}
+            ${MULLE_PREFERRED_LIBRARY_PREFIX}mulle-core${CMAKE_DEBUG_POSTFIX}${MULLE_PREFERRED_LIBRARY_SUFFIX}
+            ${MULLE_PREFERRED_LIBRARY_PREFIX}mulle-core${MULLE_PREFERRED_LIBRARY_SUFFIX}
+            ${MULLE_FALLBACK_LIBRARY_PREFIX}mulle-core${CMAKE_DEBUG_POSTFIX}${MULLE_FALLBACK_LIBRARY_SUFFIX}
+            ${MULLE_FALLBACK_LIBRARY_PREFIX}mulle-core${MULLE_FALLBACK_LIBRARY_SUFFIX}
             mulle-core
+            NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_FIND_ROOT_PATH
          )
+         if( NOT MULLE__CORE_LIBRARY AND NOT DEPENDENCY_IGNORE_SYSTEM_LIBARIES)
+            find_library( MULLE__CORE_LIBRARY NAMES
+               ${MULLE_PREFERRED_LIBRARY_PREFIX}mulle-core${CMAKE_DEBUG_POSTFIX}${MULLE_PREFERRED_LIBRARY_SUFFIX}
+               ${MULLE_PREFERRED_LIBRARY_PREFIX}mulle-core${MULLE_PREFERRED_LIBRARY_SUFFIX}
+               ${MULLE_FALLBACK_LIBRARY_PREFIX}mulle-core${CMAKE_DEBUG_POSTFIX}${MULLE_FALLBACK_LIBRARY_SUFFIX}
+               ${MULLE_FALLBACK_LIBRARY_PREFIX}mulle-core${MULLE_FALLBACK_LIBRARY_SUFFIX}
+               mulle-core
+            )
+         endif()
       endif()
       message( STATUS "MULLE__CORE_LIBRARY is ${MULLE__CORE_LIBRARY}")
-      #
-      # The order looks ascending, but due to the way this file is read
-      # it ends up being descending, which is what we need.
-      #
-      if( MULLE__CORE_LIBRARY)
+   endif()
+   if( MULLE__CORE_LIBRARY)
          #
          # Add MULLE__CORE_LIBRARY to DEPENDENCY_LIBRARIES list.
          # Disable with: `mulle-sourcetree mark mulle-core no-cmake-add`
          #
-         list( APPEND DEPENDENCY_LIBRARIES ${MULLE__CORE_LIBRARY})
+         if( NOT ${MULLE__CORE_LIBRARY} IN_LIST DEPENDENCY_LIBRARIES)
+            list( APPEND DEPENDENCY_LIBRARIES ${MULLE__CORE_LIBRARY})
+         endif()
          #
          # Inherit information from dependency.
          # Encompasses: no-cmake-searchpath,no-cmake-dependency,no-cmake-loader
@@ -91,22 +131,36 @@ else()
             # use explicit path to avoid "surprises"
             if( IS_DIRECTORY "${_TMP_MULLE__CORE_DIR}")
                list( INSERT CMAKE_MODULE_PATH 0 "${_TMP_MULLE__CORE_DIR}")
+               # we only want top level INHERIT_OBJC_DEPS, so disable them
+               if( NOT NO_INHERIT_OBJC_DEPS)
+                  set( NO_INHERIT_OBJC_DEPS OFF)
+               endif()
+               list( APPEND _TMP_INHERIT_OBJC_DEPS ${NO_INHERIT_OBJC_DEPS})
+               set( NO_INHERIT_OBJC_DEPS ON)
                #
                include( "${_TMP_MULLE__CORE_DIR}/DependenciesAndLibraries.cmake" OPTIONAL)
                #
+               list( GET _TMP_INHERIT_OBJC_DEPS -1 NO_INHERIT_OBJC_DEPS)
+               list( REMOVE_AT _TMP_INHERIT_OBJC_DEPS -1)
                list( REMOVE_ITEM CMAKE_MODULE_PATH "${_TMP_MULLE__CORE_DIR}")
                #
                unset( MULLE__CORE_DEFINITIONS)
+               unset( MULLE__CORE_RENDEZVOUS_GLOBALS)
                include( "${_TMP_MULLE__CORE_DIR}/Definitions.cmake" OPTIONAL)
                list( APPEND INHERITED_DEFINITIONS ${MULLE__CORE_DEFINITIONS})
+               include( "${_TMP_MULLE__CORE_DIR}/Definitions.cmake" OPTIONAL)
+               list( APPEND RENDEZVOUS_GLOBALS ${MULLE__CORE_RENDEZVOUS_GLOBALS})
                break()
             else()
                message( STATUS "${_TMP_MULLE__CORE_DIR} not found")
             endif()
          endforeach()
-      else()
-         # Disable with: `mulle-sourcetree mark mulle-core no-require-link`
-         message( SEND_ERROR "MULLE__CORE_LIBRARY was not found")
-      endif()
+   else()
+      # Disable with: `mulle-sourcetree mark mulle-core no-require-link`
+      message( SEND_ERROR "MULLE__CORE_LIBRARY was not found in ${MULLE_PREFERRED_LIBRARY_PREFIX}mulle-core${CMAKE_DEBUG_POSTFIX}${MULLE_PREFERRED_LIBRARY_SUFFIX}
+${MULLE_PREFERRED_LIBRARY_PREFIX}mulle-core${MULLE_PREFERRED_LIBRARY_SUFFIX}
+${MULLE_FALLBACK_LIBRARY_PREFIX}mulle-core${CMAKE_DEBUG_POSTFIX}${MULLE_FALLBACK_LIBRARY_SUFFIX}
+${MULLE_FALLBACK_LIBRARY_PREFIX}mulle-core${MULLE_FALLBACK_LIBRARY_SUFFIX}
+mulle-core")
    endif()
 endif()

@@ -8,7 +8,7 @@
 #
 cmake_minimum_required( VERSION 3.13)
 
-project( mulle-hexcolor VERSION 0.0.1 LANGUAGES C)
+project( mulle-hexcolor VERSION 0.0.2 LANGUAGES C)
 
 
 set( MULLE_PROJECT_TYPE "Library")

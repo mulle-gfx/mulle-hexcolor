@@ -13,12 +13,12 @@ export MULLE_MATCH_PATH="${MULLE_MATCH_PATH}:../src"
 #
 #
 #
-export MULLE_CRAFT_PLATFORMS="${MULLE_UNAME}:windows"
 
 
+
 #
 #
 #
-export MULLE_SOURCETREE_PLATFORMS="${MULLE_UNAME}:windows"
+
 
 

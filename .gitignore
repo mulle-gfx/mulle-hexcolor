@@ -63,3 +63,6 @@ coverage*.html
 *.tmp.*
 .roam
 .idea
+.kiro/
+TODO.md
+REVIEW.md

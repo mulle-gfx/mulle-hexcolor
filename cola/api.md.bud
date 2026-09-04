@@ -2,7 +2,9 @@
 
 | Name                          | Description
 | ------------------------------|-------------------------
-| CGHexColorMake                | shortcut for CGColorMakeWithRGBA
+| CGHexColorMake                | shortcut for CGHexColorMakeWithRGBA
 | CGHexColorMakeWithRGB         | calls CGColorMakeRGBA which alpha 1.0
 | CGHexColorMakeWithRGBA        | the most basic color construction function
+| CGHexColorMakeWithRGBAComponents | create a `CGHexColor` from a float `rgba[4]` array
+| CGHexColorGetRGBAComponents   | unpack a `CGHexColor` into a float `rgba[4]` array
 | CGHexColorMakeWithCommonName  | create color from HTML name (e.g. "alizarin-crimson")

@@ -1,0 +1,19 @@
+## Usage
+
+A color as a plain integer: R<<24, G<<16, B<<8, A. No floating point, no
+computations — just a compact, lossless "transport" representation:
+
+``` c
+#include <mulle-hexcolor/mulle-hexcolor.h>
+
+int  main( void)
+{
+   CGHexColor  c = CGHexColorMakeWithRGBA( 1.0f, 0.5f, 0.0f, 1.0f);
+
+   printf( "0x%08lx\n", (unsigned long) c);   /* 0xff8000ff */
+
+   float  rgba[ 4];
+   CGHexColorGetRGBAComponents( c, rgba);
+   return( 0);
+}
+```
