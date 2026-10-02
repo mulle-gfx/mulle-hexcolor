@@ -8,7 +8,7 @@
 #
 cmake_minimum_required( VERSION 3.13)
 
-project( mulle-hexcolor VERSION 0.0.2 LANGUAGES C)
+project( mulle-hexcolor VERSION 0.0.3 LANGUAGES C)
 
 
 set( MULLE_PROJECT_TYPE "Library")
@@ -58,8 +58,8 @@ endif()
 include( InstallLibrary)
 
 if( LINK_PHASE)
-   include( InstallCMakeInclude)
-   include( InstallCMakePackage)
+   include( AddSubdirectorySupport)
+   include( FindPackageSupport)
 endif()
    
 include( FinalOutput OPTIONAL)

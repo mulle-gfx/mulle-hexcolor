@@ -43,7 +43,7 @@
  *
  *  version:  major, minor, patch
  */
-#define MULLE__HEXCOLOR_VERSION  ((0UL << 20) | (0 << 8) | 2)
+#define MULLE__HEXCOLOR_VERSION  ((0UL << 20) | (0 << 8) | 3)
 
 
 #include "CGHexColor.h"
